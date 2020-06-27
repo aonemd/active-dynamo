@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.version = ActiveDynamo::VERSION
   gem.license = 'MIT'
 
-  gem.add_dependency 'aws-sdk'
+  gem.add_dependency 'aws-sdk-dynamodb'
 
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'minitest'
