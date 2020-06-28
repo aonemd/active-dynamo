@@ -5,6 +5,12 @@ module ActiveDynamo
         @@table_name = options.fetch(:name, name)
         @@key        = options.fetch(:key, nil)
         @@db_conn    = options.fetch(:db_conn, Aws::DynamoDB::Client.new)
+
+        class_variables.each do |var|
+          define_singleton_method(var.to_s.delete('@')) do
+            class_variable_get(var)
+          end
+        end
       end
 
       def attributes(*attrs)
