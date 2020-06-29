@@ -1,8 +1,11 @@
 require 'active_dynamo/queries'
+require 'active_dynamo/persistence'
 
 module ActiveDynamo
   class Base
     extend Queries
+
+    include Persistence
 
     class << self
       def table(options = {})
@@ -28,20 +31,6 @@ module ActiveDynamo
           end
         end
       end
-
-      def create(**args)
-        obj = new(**args)
-        obj.save
-        obj
-      end
-
-      def delete(**key_value)
-        @@db_conn.delete_item({ table_name: @@table_name, key: key_value})
-      end
-    end
-
-    def save
-      @@db_conn.put_item({ table_name: @@table_name, item: self.attributes })
     end
 
     def update(**args)
