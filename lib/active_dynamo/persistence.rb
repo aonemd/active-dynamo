@@ -12,8 +12,8 @@ module ActiveDynamo
       end
 
       def destroy(**key_value)
-        self.class.db_conn.delete_item({
-          table_name: self.class.table_name,
+        db_conn.delete_item({
+          table_name: table_name,
           key: key_value
         })
       end
