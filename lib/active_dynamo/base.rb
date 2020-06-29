@@ -3,8 +3,7 @@ require 'active_dynamo/persistence'
 
 module ActiveDynamo
   class Base
-    extend Queries
-
+    include Queries
     include Persistence
 
     class << self
