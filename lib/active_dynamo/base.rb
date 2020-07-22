@@ -32,22 +32,6 @@ module ActiveDynamo
       end
     end
 
-    def update(**args)
-      updated_attrs = @@db_conn.update_item({
-        table_name: @@table_name,
-        key: self.key_attributes,
-        update_expression: update__update_expression(args),
-        expression_attribute_values: update__expression_attribute_values(args),
-        return_values: "UPDATED_NEW"
-      }).attributes
-
-      updated_attrs.each do |key, value|
-        self.instance_variable_set("@#{key}", value)
-      end
-
-      self
-    end
-
     def attributes
       @@attrs.inject({}) do |h, attr|
         h.update(attr => self.instance_variable_get("@#{attr}"))
@@ -62,18 +46,6 @@ module ActiveDynamo
 
     def update_key(keys)
       @@key ||= keys
-    end
-
-    def update__update_expression(args)
-      args.each_with_index.map do |(key, value), index|
-        "#{key} = :#{key}#{index}"
-      end.join(", ").prepend("SET ")
-    end
-
-    def update__expression_attribute_values(args)
-      args.each_with_index.inject({}) do |expr, ((key, value), index)|
-        expr.update(":#{key}#{index}" => value)
-      end
     end
   end
 end

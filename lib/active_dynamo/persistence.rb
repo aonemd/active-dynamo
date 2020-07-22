@@ -1,3 +1,5 @@
+require_relative 'persistence/updater'
+
 module ActiveDynamo
   module Persistence
     def self.included(klass)
@@ -24,6 +26,10 @@ module ActiveDynamo
         table_name: self.class.table_name,
         item: self.attributes
       })
+    end
+
+    def update(**args)
+      Updater.new(self).call(**args)
     end
   end
 end
