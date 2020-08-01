@@ -8,7 +8,7 @@ module ActiveDynamo
 
     class << self
       def table(options = {})
-        @@table_name = options.fetch(:name, name)
+        @@table_name = options.fetch(:name, snake_name)
         @@key        = options.fetch(:key, nil)
         @@db_conn    = options.fetch(:db_conn, Aws::DynamoDB::Client.new)
 
