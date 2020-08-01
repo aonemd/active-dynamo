@@ -21,7 +21,7 @@ module ActiveDynamo
 
       def attributes(*attrs)
         @@attrs = attrs
-        attr_reader *@@attrs
+        attr_reader(*@@attrs)
 
         define_method(:initialize) do |**args|
           @@attrs.each do |name|
