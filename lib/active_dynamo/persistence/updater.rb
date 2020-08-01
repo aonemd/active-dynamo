@@ -24,7 +24,7 @@ module ActiveDynamo
       private
 
       def update_expression(args)
-        args.each_with_index.map do |(key, value), index|
+        args.each_with_index.map do |(key, _), index|
           "#{key} = :#{key}#{index}"
         end.join(", ").prepend("SET ")
       end
