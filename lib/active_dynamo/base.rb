@@ -29,6 +29,10 @@ module ActiveDynamo
             instance_variable_set("@#{name}", _value)
           end
         end
+
+        define_singleton_method('attrs') do
+          class_variable_get('@@attrs')
+        end
       end
     end
 
