@@ -23,7 +23,7 @@ module ActiveDynamo
       def find(**key_value)
         obj_hash = db_conn
           .get_item({ table_name: table_name, key: key_value }).item
-          .transform_keys(&:to_sym)
+          .symbolize_keys
 
         obj = new(obj_hash)
         obj.send(:update_key, key_value.keys)
