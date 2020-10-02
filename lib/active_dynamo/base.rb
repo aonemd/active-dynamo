@@ -8,9 +8,11 @@ module ActiveDynamo
 
     class << self
       def table(options = {})
-        @@table_name = options.fetch(:name, snake_name)
-        @@key        = options.fetch(:key, nil)
-        @@db_conn    = options.fetch(:db_conn, Aws::DynamoDB::Client.new)
+        @@table_name    = options.fetch(:name, snake_name)
+        @@partition_key = options.fetch(:partition_key, nil)
+        @@sort_key      = options.fetch(:sort_key, nil)
+        @@primary_key   = [@@partition_key, @@sort_key].compact
+        @@db_conn       = options.fetch(:db_conn, Aws::DynamoDB::Client.new)
 
         class_variables.each do |var|
           define_singleton_method(var.to_s.delete('@')) do
@@ -42,14 +44,14 @@ module ActiveDynamo
       end
     end
 
-    def key_attributes
-      self.attributes.slice(*@@key)
+    def primary_key_attributes
+      self.attributes.slice(*@@primary_key)
     end
 
     private
 
-    def update_key(keys)
-      @@key ||= keys
+    def update_primary_key(keys)
+      @@primary_key ||= keys
     end
   end
 end

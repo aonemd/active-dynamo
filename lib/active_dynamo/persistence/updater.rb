@@ -8,7 +8,7 @@ module ActiveDynamo
       def call(**args)
         updated_attrs = @initiator.class.db_conn.update_item({
           table_name: @initiator.class.table_name,
-          key: @initiator.key_attributes,
+          key: @initiator.primary_key_attributes,
           update_expression: update_expression(args),
           expression_attribute_values: expression_attribute_values(args),
           return_values: "UPDATED_NEW"

@@ -26,7 +26,7 @@ module ActiveDynamo
           .symbolize_keys
 
         obj = new(obj_hash)
-        obj.send(:update_key, key_value.keys)
+        obj.send(:update_primary_key, key_value.keys)
         obj
       end
     end
