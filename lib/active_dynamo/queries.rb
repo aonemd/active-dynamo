@@ -1,3 +1,5 @@
+require_relative 'queries/query_generator'
+
 module ActiveDynamo
   module Queries
     def self.included(klass)
@@ -11,12 +13,11 @@ module ActiveDynamo
         end
       end
 
-      def where(**key_value)
-        _key   = key_value.keys.first
-        _value = key_value.values.first
+      def where(args)
+        query = QueryGenerator.new(self).call(args)
 
-        self.all.select do |item|
-          item.send(_key) == _value
+        db_conn.query(query).items.map do |item|
+          new(item.symbolize_keys)
         end
       end
 
