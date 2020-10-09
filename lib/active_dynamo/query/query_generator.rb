@@ -26,14 +26,17 @@ module ActiveDynamo
           key_alias   = "#key_#{key}_#{index}"
           expression_attribute_names.update(key_alias => key)
 
+          key_type_parser = method(@initiator.attr_types.fetch(key).to_s)
+
           unless operator == 'BETWEEN'
-            value = arg[:value]
+            value = key_type_parser.call(arg[:value])
             value_alias = ":key_#{key}_#{index}_value"
 
             sub_expression = [key_alias, value_alias].join(" #{operator} ")
             expression_attribute_values.update(value_alias => value)
           else
-            value1, value2 = arg[:value1], arg[:value2]
+            value1 = key_type_parser.call(arg[:value1])
+            value2 = key_type_parser.call(arg[:value2])
 
             value1_alias = ":key_#{key}_#{index}_value_1"
             value2_alias = ":key_#{key}_#{index}_value_2"
