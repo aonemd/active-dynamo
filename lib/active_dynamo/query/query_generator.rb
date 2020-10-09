@@ -1,5 +1,5 @@
 module ActiveDynamo
-  module Queries
+  module Query
     class QueryGenerator
       def initialize(initiator)
         @initiator = initiator

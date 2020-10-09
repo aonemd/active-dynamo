@@ -1,9 +1,9 @@
-require 'active_dynamo/queries'
+require 'active_dynamo/query'
 require 'active_dynamo/persistence'
 
 module ActiveDynamo
   class Base
-    include Queries
+    include Query
     include Persistence
 
     class << self

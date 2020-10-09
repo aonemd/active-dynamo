@@ -1,7 +1,7 @@
-require_relative 'queries/query_generator'
+require_relative 'query/query_generator'
 
 module ActiveDynamo
-  module Queries
+  module Query
     def self.included(klass)
       klass.extend(ClassMethods)
     end
