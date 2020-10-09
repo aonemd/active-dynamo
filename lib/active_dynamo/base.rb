@@ -21,19 +21,25 @@ module ActiveDynamo
         end
       end
 
-      def attributes(*attrs)
-        @@attrs = attrs
+      def attributes(**attrs)
+        @@attr_types = attrs
+        @@attrs      = attrs.keys
         attr_reader(*@@attrs)
 
         define_method(:initialize) do |**args|
           @@attrs.each do |name|
-            _value = args[name]
+            _type_parser = method(@@attr_types.fetch(name).to_s)
+            _value       = _type_parser.call(args[name])
             instance_variable_set("@#{name}", _value)
           end
         end
 
         define_singleton_method('attrs') do
           class_variable_get('@@attrs')
+        end
+
+        define_singleton_method('attr_types') do
+          class_variable_get('@@attr_types')
         end
       end
     end
