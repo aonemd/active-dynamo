@@ -3,6 +3,8 @@ active-dynamo
 
 An ActiveRecord like ODM for AWS DynamoDB
 
+[![Gem Version](https://badge.fury.io/rb/active-dynamo.svg)](https://badge.fury.io/rb/active-dynamo)
+
 ## Installation
 
 ```sh
